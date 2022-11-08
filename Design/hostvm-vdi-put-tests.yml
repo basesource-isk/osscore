@@ -1,0 +1,145 @@
+authentication:
+  auth: DB
+  username: admin
+  password: optical-bells1
+base url: https://10.1.140.106/uds/rest/
+urls:
+  - url: auth/login/
+    details:
+    method: post
+    body: 
+      auth: DB
+      username: admin
+      password: optical-bells1
+  - url: authenticators/
+    method: put
+    body:
+      name: test
+      label: db
+      comments: testing
+      tags:
+      priority: 2
+      small_name: db
+      visible: true
+      type: InternalDBAuth
+    details:
+      - url: groups
+        method: put
+        body: 
+          name: vdigroup
+          comments: testing
+          state: A
+          type: group
+          meta_if_any: false
+      - url: users
+        method: put
+        body: 
+          name: vdiadmin
+          password: password
+          groups: vdigroup
+          real_name: somename
+          comments: testing
+          state: Active
+          staff_member: true
+          is_admin: true
+          parent: null
+          role: Admin
+  - url: providers/
+    method: put
+    body: 
+      name: vdispo
+      host: engine.vdispo.ru
+      username: admin@internal
+      password: engine
+      type: oVirtPlatform
+      comments: testing
+      tags: 
+      macsRange: 52:54:02:00:00:00-52:54:02:FF:FF:FF
+      timeout: 10
+    details: 
+      - url: services
+        method: put
+        body:
+          name: ubuntu2204
+          tags: []
+          comments: testing
+          type: oVirtLinkedService
+          proxy_id: -1
+          cluster: 2fc3ea8e-09fc-11eb-9975-00163e407f78
+          datastore: 7bfd1a3d-431e-4627-aa60-531794286c37
+          machine: 749c436b-80aa-473a-ad72-f72de45df59e
+          minSpaceGB: 32
+          memory: 2048
+          memoryGuaranteed: 2048
+          usb: native
+          display: spice
+          baseName: ubuntu2204-
+          lenName: 2
+          data_type: oVirtLinkedService
+  - url: osmanagers/
+    method: put
+    body:
+      name: linux
+      type: LinuxManager
+      onLogout: ""
+      idle: -1
+      comments: testing
+      tags: []
+  - url: transports/
+    method: put
+    body: 
+      pools:
+      name: spice
+      tags: ["how","to","add","servicepool"]
+      comments: "testing"
+      type: SPICETransport
+      priority: 1
+      nets_positive: true
+      allowed_oss: []
+  - url: servicespools/
+    method: put
+    body:
+      name: ubuntu2204
+      short_name: ubuntu2204
+      comments: testing
+      tags: []
+      service_id: # назначается автоматически
+      provider_id: # назначается автоматически
+      osmanager_id: # назначается автоматически
+      image_id:
+      pool_group_id:
+      initial_srvs: 0
+      cache_l1_srvs: 0
+      cache_l2_srvs: 0
+      max_srvs: 0
+      show_transports: true
+      visible: true
+      allow_users_remove: false
+      allow_users_reset: false
+      ignores_unused: false
+      account_id:
+      calendar_message: calendar message
+    details:
+      - url: transports/
+        method: put
+        body:
+          transport_id: # назначается автоматически
+      - url: groups/
+        method: put
+        body:
+          group_id: # назначается автоматически
+           
+          
+          
+          
+          
+
+
+
+
+
+
+    
+  
+
+

@@ -1,0 +1,36 @@
+.file-drop-area {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 450px;
+  max-width: 100%;
+  padding: 15px;
+  border: 1px dashed rgba(0, 0, 0, 0.8);
+  border-radius: 3px;
+  transition: 0.2s;
+}
+
+
+.file-msg {
+  font-size: small;
+  font-weight: 300;
+  line-height: 1.4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.file-input {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  cursor: pointer;
+  opacity: 0;
+}
+
+.file-input:focus {
+  outline: none;
+}
+

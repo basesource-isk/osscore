@@ -1,0 +1,55 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+{% load static %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Home - UdsRestTesting</title>
+    <link rel="stylesheet" href={% static "assets/bootstrap/css/bootstrap.min.css" %}>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Anton&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Archivo+Black&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Asset&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bangers&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bebas+Neue&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bevan&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bigshot+One&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Black+Han+Sans&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bowlby+One&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bowlby+One+SC&amp;display=swap">
+    <link rel="stylesheet" href={% static "assets/css/material.min.css" %}>
+    <link rel="stylesheet" href={% static "assets/css/mdb.min.css" %}>
+    <link rel="stylesheet" href={% static "assets/css/style.css" %}>
+</head>
+
+<body>
+    <nav class="navbar navbar-light navbar-expand navigation-clean white" style="font-size: 16px;font-weight: bold;font-family: Lato, sans-serif;border-bottom: 5px solid var(--bs-yellow) ;">
+        <div class="container"><a class="navbar-brand" href="#" style="font-family: 'Abril Fatface', serif;font-size: 31px;">OSS Core</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"></button>
+            <div class="collapse navbar-collapse" id="navcol-1"></div>
+        </div>
+    </nav>
+    {% block header %}{% endblock header %}
+    {% block result %}{% endblock result %}
+    {% block js %}{% endblock js %}
+    <script src={% static "assets/js/jquery.min.js" %}></script>
+    <script src={% static "assets/bootstrap/js/bootstrap.min.js" %}></script>
+    <script src={% static "assets/js/material.min.js" %}></script>
+    <script src={% static "assets/js/mdb.min.js" %}></script>
+    <script>
+        // включить Bootstrap Tooltips
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+        });
+        {% autoescape off %}{{js}}{% endautoescape %}
+        if(window.history.replaceState){
+            window.history.replaceState(null,null,window.location.href)
+        }
+        
+    </script>
+</body>
+
+</html>
