@@ -11,7 +11,7 @@ services:
         - POSTGRES_PASSWORD=postgres
     web:
       image: osscore/osscore
-      command: python manage.py runserver 0.0.0.0:8000
+      command: bash -c "python ./manage.py migrate && python ./manage.py runserver 0.0.0.0:8000"
       volumes:
         - .:/code
       ports:
