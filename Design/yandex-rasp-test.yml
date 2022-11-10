@@ -10,3 +10,4 @@ urls:
     method: get
   - url: '&from=c213&to=c63&when=сегодня'
     method: get
+  - url: 'from=c213&to=c51&when=сегодня'
