@@ -10,5 +10,5 @@ urls:
     method: get
   - url: '&from=c213&to=c63'
     method: get
-  - url: 'from=c213&to=c51'
+  - url: '&from=c213&to=c51'
     method: get
