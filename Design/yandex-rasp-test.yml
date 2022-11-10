@@ -1,13 +1,13 @@
 base url: https://api.rasp.yandex.net/v3.0/search/?apikey=a13deeda-bb36-46db-bc97-ff97658b9031
 urls:
-  - url: '&from=c213&to=c75&when=сегодня'
+  - url: '&from=c213&to=c75'
     method: get
-  - url: '&from=c213&to=c56&when=сегодня'
+  - url: '&from=c213&to=c56'
     method: get
-  - url: '&from=c213&to=c43&when=сегодня'
+  - url: '&from=c213&to=c43'
     method: get
-  - url: '&from=c213&to=c2&when=сегодня'
+  - url: '&from=c213&to=c2'
     method: get
-  - url: '&from=c213&to=c63&when=сегодня'
+  - url: '&from=c213&to=c63'
     method: get
-  - url: 'from=c213&to=c51&when=сегодня'
+  - url: 'from=c213&to=c51'
