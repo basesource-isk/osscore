@@ -38,12 +38,8 @@ class ResponseRestApiTestLine:
 def restApi(request):
     if request.method == 'POST':
         data = runRestApiTest(request)
-        if "file" not in request.FILES:
-            return render(request,'index.html')
-        else:
-            return render(request, 'index.html', data)
+        return render(request,'index.html',data)
     else:
-        
         return render(request,'index.html')
 
 
@@ -70,17 +66,30 @@ def runRestApiTest(request):
 
     js = str()
     lines = list()
+    p=''
+    filename=''
+    global file
+    
     try:
-        global file
+        # если файл загружен
         file=request.FILES['file']
+        p='uploads'
+        filename=file.name
     except:
-        return render(request, "index.html")
-    HandleUploadedFile(file, request)
+        # если файл не загружен, использовать локальный файл для примера
+        p='design'
+        filename='yandex-rasp-test.yml'
+        # return render(request, "index.html")
+    parts=[p,filename]
+    path=joinUrl(parts)
+    if file!='':
+        HandleUploadedFile(file,path, request)
     js = "alert('Файл загружен')"
-    yamlDict = getYamlDict(f'uploads/{file.name}')
+    yamlDict = getYamlDict(f'{path}')
     fileUploadId=getIntRand()
     setCookie(request,fileUploadId)
     lines = ProcessUrls(yamlDict,fileUploadId)
+    print(f'=== {nameof(lines)}:{lines}')
     CreateDeletingFile(lines,fileUploadId)
     data = {"js": js, "file": lines}
     return data
@@ -110,7 +119,8 @@ def ProcessUrls(yamlDict,fileUploadId):
     s = requests.Session()
     # получить токен
     token = GetToken(yamlDict, s)
-    s.headers = {'X-Auth-Token': token}
+    if token!=None:
+        s.headers = {'X-Auth-Token': token}
     baseUrl = ''
     try:
         baseUrl = yamlDict['base url']
@@ -194,8 +204,8 @@ def ProcessUrls(yamlDict,fileUploadId):
     return lines
 
 
-def HandleUploadedFile(f, request):
-    with open(f'uploads/{f.name}', 'wb+') as destination:
+def HandleUploadedFile(f,path, request):
+    with open(f'{path}', 'wb+') as destination:
         for chunk in f.chunks():
             destination.write(chunk)
 
@@ -203,7 +213,10 @@ def HandleUploadedFile(f, request):
 def GetToken(yamlDict, s):
     baseUrl = yamlDict['base url']
     urls = yamlDict['urls']
-    authentication = json.dumps(yamlDict['authentication'])
+    try:
+        authentication = json.dumps(yamlDict['authentication'])
+    except:
+        return None
     # проверить, существует ли в urls строка с частью login
     loginExists = False
     loginUrl = baseUrl
@@ -213,13 +226,17 @@ def GetToken(yamlDict, s):
             loginUrl = baseUrl+url['url']
             break
     if loginExists == False:
-        raise Exception("=== путь для аутентификации не найден в файле")
+        # raise Exception("=== путь для аутентификации не найден в файле")
+        return None
     response = s.post(loginUrl, authentication, verify=False)
     token = json.loads(response.text)
-    token = token['token']
+    try:
+        token = token['token']
+    except:
+        pass
     if token == None:
-        raise Exception(
-            "=== ошибка аутентификации, вероятно указаны неверные логин/пароль")
+        # raise Exception("=== ошибка аутентификации, вероятно указаны неверные логин/пароль")
+        pass
     return token
 
 
@@ -253,7 +270,7 @@ def getJsonTextOrTextContent(response):
     if 'json' in response.headers['content-type']:
         # привести к словарю
         a = json.loads(response.text)
-        content = json.dumps(a, indent=4)
+        content = json.dumps(a, indent=4,ensure_ascii=0)
     else:
         content = response.text
     return content
@@ -269,6 +286,8 @@ def getJsonDictOrTextContent(response):
 
 
 def CreateDeletingFile(lines,fileUploadId):
+    global file
+    if file=='': return
     lines.reverse()
     urls=[x.url for x in lines]
     
@@ -531,6 +550,9 @@ def joinUrl(parts):
 def getYamlDict(path):
     file=open(path)
     content=file.read()
+    print(f'=== {nameof(path)}:{path}')
+    print(f'=== {nameof(file)}:{file}')
+    print(f'=== {nameof(content)}:{content}')
     yamlDict=load(content,Loader=Loader)
     return yamlDict
 
