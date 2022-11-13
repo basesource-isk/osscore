@@ -77,7 +77,7 @@ def runRestApiTest(request):
         filename=file.name
     except:
         # если файл не загружен, использовать локальный файл для примера
-        p='design'
+        p='Design'
         filename='yandex-rasp-test.yml'
         # return render(request, "index.html")
     parts=[p,filename]
